@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Painel de Senhas</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<h1>Painel de Senhas</h1>
+<table>
+    <tr>
+        <th>Nome</th>
+        <th>Serviço</th>
+        <th>Senha</th>
+    </tr>
+    <tr th:each="senha : ${senhas}">
+        <td th:text="${senha.nome}"></td>
+        <td th:text="${senha.servico}"></td>
+        <td th:text="${senha.senha}"></td>
+    </tr>
+</table>
+
+<form action="/chamar" method="post">
+    <button type="submit">Chamar Próxima Senha</button>
+</form>
+
+<a href="/">Voltar</a>
+</body>
+</html>

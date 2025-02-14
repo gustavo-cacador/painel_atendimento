@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Gerar Senha</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<h1>Gerar Senha</h1>
+<form action="/gerar" method="post">
+    <label>Nome:</label>
+    <input type="text" name="nome" required>
+    <label>Tipo de Serviço:</label>
+    <select name="servico">
+        <option value="Consulta">Consulta</option>
+        <option value="Exame">Exame</option>
+        <option value="Atendimento">Atendimento</option>
+    </select>
+    <button type="submit">Gerar Senha</button>
+</form>
+
+<div th:if="${senha}">
+    <h2>Sua senha:</h2>
+    <p th:text="${senha.senha}"></p>
+</div>
+
+<a href="/painel">Ir para o Painel</a>
+</body>
+</html>
