@@ -5,6 +5,7 @@ import br.com.gustavo.painel_atendimento.repositories.SenhaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -26,9 +27,9 @@ public class SenhaService {
     }
 
     public void chamarProximaSenha() {
-        List<Senha> senhasPendentes = listarSenhasPendentes();
-        if (!senhasPendentes.isEmpty()) {
-            Senha senha = senhasPendentes.get(0);
+        List<Senha> senhas = listarSenhasPendentes();
+        if (!senhas.isEmpty()) {
+            Senha senha = senhas.get(0);
             senha.setChamada(true);
             senhaRepository.save(senha);
         }
@@ -36,5 +37,11 @@ public class SenhaService {
 
     private String gerarCodigoSenha(String servico) {
         return servico.substring(0, 1).toUpperCase() + System.currentTimeMillis() % 1000;
+    }
+
+    public void gerarSenha(Senha senha) {
+        senha.setDataHora(LocalDateTime.now());
+        senha.setChamada(false);
+        senhaRepository.save(senha);
     }
 }
