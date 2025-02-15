@@ -10,29 +10,29 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
-@Controller // ✅ Agora o Spring sabe que retorna páginas HTML
+@Controller //Agora o Spring sabe que retorna páginas HTML
 @RequestMapping("/senhas")
 public class SenhaController {
 
     @Autowired
     private SenhaService senhaService;
 
-    // 🟢 Página inicial
+    // pagina inicial
     @GetMapping
     public String formularioSenha(Model model) {
         model.addAttribute("senha", new Senha());
         return "gerar-senha";
     }
 
-    // 🟢 Gerar Senha
+    // gera senha
     @PostMapping("/gerar")
-    public String gerarSenha(@ModelAttribute Senha senha, RedirectAttributes redirectAttributes) {
-        senhaService.gerarSenha(senha);
-        redirectAttributes.addFlashAttribute("mensagem", "Senha gerada com sucesso!");
+    public String gerarSenha(@RequestParam String nome, @RequestParam String servico, RedirectAttributes redirectAttributes) {
+        Senha senha = senhaService.gerarSenha(nome, servico);
+        redirectAttributes.addFlashAttribute("mensagem", "Senha gerada com sucesso: " + senha.getSenha());
         return "redirect:/senhas";
     }
 
-    // 🟢 Exibir painel de senhas pendentes
+    // exibe painel de senhas pendentes
     @GetMapping("/painel")
     public String painelSenhas(Model model) {
         List<Senha> senhas = senhaService.listarSenhasPendentes();
@@ -40,7 +40,7 @@ public class SenhaController {
         return "painel";
     }
 
-    // 🟢 Chamar próxima senha
+    // chama a próxima senha
     @PostMapping("/chamar")
     public String chamarProximaSenha() {
         senhaService.chamarProximaSenha();
