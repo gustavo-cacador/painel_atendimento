@@ -2,14 +2,14 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Painel de Atendimento</title>
+    <title>Painel de Controle</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
 
 <div class="container mt-4">
-    <h2 class="text-center">Painel de Atendimento</h2>
+    <h2 class="text-center">Painel de Controle</h2>
 
     <div class="row mt-4">
         <!-- Senhas Atendidas -->
@@ -26,6 +26,9 @@
             <ul class="list-group" id="senhas-pendentes">
                 <li class="list-group-item list-group-item-warning" th:each="senha : ${senhasPendentes}" th:text="${senha.senha}"></li>
             </ul>
+            <div class="text-center mt-3">
+                <button class="btn btn-primary" onclick="chamarProximaSenha()">Chamar Próxima Senha</button>
+            </div>
         </div>
     </div>
 </div>
@@ -46,6 +49,12 @@
             data.senhasPendentes.forEach(senha => {
                 $("#senhas-pendentes").append(`<li class="list-group-item list-group-item-warning">${senha.senha}</li>`);
             });
+        });
+    }
+
+    function chamarProximaSenha() {
+        $.post("/chamar-proxima", function() {
+            atualizarPainel(); // Atualiza a lista após chamar a senha
         });
     }
 
