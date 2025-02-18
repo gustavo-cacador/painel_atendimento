@@ -15,7 +15,7 @@
         <!-- Senhas Atendidas -->
         <div class="col-md-6">
             <h4 class="text-success text-center">Senhas Atendidas</h4>
-            <ul class="list-group" id="senhas-atendidas">
+            <ul class="list-group">
                 <li class="list-group-item list-group-item-success" th:each="senha : ${senhasAtendidas}" th:text="${senha.senha}"></li>
             </ul>
         </div>
@@ -23,33 +23,19 @@
         <!-- Senhas na Fila -->
         <div class="col-md-6">
             <h4 class="text-danger text-center">Senhas na Fila</h4>
-            <ul class="list-group" id="senhas-pendentes">
+            <ul class="list-group">
                 <li class="list-group-item list-group-item-warning" th:each="senha : ${senhasPendentes}" th:text="${senha.senha}"></li>
             </ul>
         </div>
     </div>
 </div>
 
-<!-- Script para atualizar a fila automaticamente -->
+<!-- Script para atualizar a fila automaticamente a cada 5 segundos -->
 <script>
     function atualizarPainel() {
-        $.get("/atualizar-painel", function(data) {
-            $("#senhas-atendidas").empty();
-            $("#senhas-pendentes").empty();
-
-            // Atualizando Senhas Atendidas
-            data.senhasAtendidas.forEach(senha => {
-                $("#senhas-atendidas").append(`<li class="list-group-item list-group-item-success">${senha.senha}</li>`);
-            });
-
-            // Atualizando Senhas Pendentes
-            data.senhasPendentes.forEach(senha => {
-                $("#senhas-pendentes").append(`<li class="list-group-item list-group-item-warning">${senha.senha}</li>`);
-            });
-        });
+        location.reload();
     }
-
-    setInterval(atualizarPainel, 5000); // Atualiza a cada 5 segundos
+    setInterval(atualizarPainel, 5000);
 </script>
 
 </body>
