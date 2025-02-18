@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface SenhaRepository extends JpaRepository<Senha, Long> {
     List<Senha> findByChamadaFalseOrderByDataHoraAsc();
+
+    List<Senha> findByChamadaTrueOrderByDataHoraAsc();
 }
