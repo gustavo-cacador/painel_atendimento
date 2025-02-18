@@ -32,16 +32,13 @@ public class SenhaService {
         return senhaRepository.findByChamadaFalseOrderByDataHoraAsc();
     }
 
-    public Senha chamarProximaSenha() {
+    public void chamarProximaSenha() {
         List<Senha> senhas = listarSenhasPendentes();
-
         if (!senhas.isEmpty()) {
             Senha senha = senhas.get(0);
             senha.setChamada(true);
             senhaRepository.save(senha);
-            return senha;
         }
-        return null;
     }
 
     private String gerarCodigoSenha(String servico) {
@@ -52,9 +49,5 @@ public class SenhaService {
         senha.setDataHora(LocalDateTime.now());
         senha.setChamada(false);
         senhaRepository.save(senha);
-    }
-
-    public List<Senha> listarSenhasAtendidas() {
-        return senhaRepository.findByChamadaTrueOrderByDataHoraAsc();
     }
 }
